@@ -170,6 +170,35 @@ def load_compat_db() -> Dict[tuple, Dict[str, Any]]:
 
 COMPAT_DB = load_compat_db()
 
+TROUBLE_DB_PATH = Path(__file__).parent / "data" / "troubleshoot_seed.json"
+
+def load_trouble_db() -> List[Dict[str, Any]]:
+    return json.loads(TROUBLE_DB_PATH.read_text())
+
+TROUBLE_DB = load_trouble_db()
+
+def parse_yes_no_unsure(text: str) -> Optional[str]:
+    t = text.strip().lower()
+    if t in {"yes", "y", "yeah", "yep"}:
+        return "yes"
+    if t in {"no", "n", "nope"}:
+        return "no"
+    if t in {"unsure", "not sure", "idk", "don't know", "dont know"}:
+        return "unsure"
+    return None
+
+def find_troubleshoot_topic(user_text: str) -> Optional[Dict[str, Any]]:
+    t = re.sub(r"[^a-z0-9\s]", " ", user_text.lower())
+    t = re.sub(r"\s+", " ", t).strip()
+
+    for topic in TROUBLE_DB:
+        for trig in topic.get("triggers", []):
+            trig_norm = re.sub(r"[^a-z0-9\s]", " ", trig.lower())
+            trig_norm = re.sub(r"\s+", " ", trig_norm).strip()
+            if trig_norm and trig_norm in t:
+                return topic
+    return None
+
 
 # In-memory per-session memory 
 SESSION_MEMORY: Dict[str, Dict[str, Any]] = {}
@@ -279,6 +308,61 @@ def chat(req: ChatRequest):
             "cards": [],
             "memory": mem
         }
+    
+    # If currently troubleshooting, record answer and ask next question
+    if mem.get("troubleshoot"):
+        ts = mem["troubleshoot"]
+        topic = ts.get("topic_data")
+        if topic:
+            yn = parse_yes_no_unsure(user_text)
+            if yn is not None and ts.get("current_key"):
+                ts.setdefault("answers", {})[ts["current_key"]] = yn
+
+            questions = topic.get("questions", [])
+            answers = ts.get("answers", {})
+
+            next_q = None
+            for q in questions:
+                if q["key"] not in answers:
+                    next_q = q
+                    break
+
+            if next_q:
+                ts["current_key"] = next_q["key"]
+                mem["troubleshoot"] = ts
+                return {
+                    "session_id": req.session_id,
+                    "messages": [{"role": "assistant", "content": next_q["ask"], "citations": []}],
+                    "cards": [],
+                    "memory": mem
+                }
+
+            # All answered: show checklist  and suggested parts
+            checks = topic.get("checks", [])
+            checks_md = "\n".join([f"- {c}" for c in checks]) if checks else "- (no checks listed)"
+
+            content = (
+                f"**{topic.get('title','Troubleshooting')}**\n\n"
+                f"Here's what to try next (in order):\n{checks_md}\n\n"
+                "If you share your exact fridge model number and whether the ice tray is empty vs frozen, I can narrow it down further."
+            )
+            citations = topic.get("citations", [])
+
+            cards = []
+            for p in topic.get("likely_parts", []):
+                pn = (p.get("part_number") or "").upper()
+                part = PARTS_DB.get(pn)
+                if part:
+                    cards.append(make_product_card(part))
+
+            mem.pop("troubleshoot", None)
+
+            return {
+                "session_id": req.session_id,
+                "messages": [{"role": "assistant", "content": content, "citations": citations}],
+                "cards": cards,
+                "memory": mem
+            }
 
     # Scope guard
     if not is_in_scope(user_text, mem):
@@ -293,6 +377,7 @@ def chat(req: ChatRequest):
 
     
     
+    
 
     found_part = extract_part_number(user_text)
     found_model = extract_model_number(user_text)
@@ -304,6 +389,8 @@ def chat(req: ChatRequest):
         mem["last_part_number"] = found_part
     if found_model:
         mem["last_model_number"] = found_model
+
+    # pending_intent allows button-driven multi-turn flows (e.g. ask for model after click)
 
     # Complete a pending compatibility flow when the user replies with just a model number
     if mem.get("pending_intent") == "COMPATIBILITY":
@@ -332,6 +419,7 @@ def chat(req: ChatRequest):
                 "memory": mem
             }
     
+
     
     part = PARTS_DB.get(part_number) if part_number else None
     cards = [make_product_card(part)] if part else []
@@ -339,6 +427,10 @@ def chat(req: ChatRequest):
     guide = GUIDES_DB.get(part_number) if part_number else None
 
     citations = []
+
+    # Troubleshooting flow
+    
+
 
     if intent == Intent.INSTALL:
         if part and guide:
@@ -388,11 +480,26 @@ def chat(req: ChatRequest):
             
 
     elif intent == Intent.TROUBLESHOOT:
-        content = (
-            "Got it — you are troubleshooting. "
-            "Tell me: (1) fridge or dishwasher, (2) brand, (3) model number if you have it, "
-            "and what symptom you are seeing. I will suggest checks and likely parts."
-        )
+        topic = find_troubleshoot_topic(user_text)
+        if topic:
+            mem["troubleshoot"] = {"topic_data": topic, "answers": {}, "current_key": None}
+            first = topic["questions"][0]
+            mem["troubleshoot"]["current_key"] = first["key"]
+            return {
+                "session_id": req.session_id,
+                "messages": [{"role": "assistant", "content": first["ask"], "citations": []}],
+                "cards": [],
+                "memory": mem
+            }
+        else:
+            content = (
+                "Got it — troubleshooting. Tell me: (1) fridge or dishwasher, (2) brand, (3) model number if you have it, "
+                "and what symptom you’re seeing (e.g., not making ice, leaking, not draining)."
+            )
+            citations = []
+            cards = []
+
+    
     elif intent == Intent.FIND_PART:
         content = (
             "Got it — you are looking for a part. "
@@ -405,11 +512,20 @@ def chat(req: ChatRequest):
             "If you can share your order number (or the email used), "
             "tell me what you need help with (tracking/return/refund/cancellation)."
         )
+    
     else:
-        content = (
-            "I can help with refrigerator/dishwasher parts on PartSelect. "
-            "Tell me your model number or the part number you are looking at."
-        )
+        topic = find_troubleshoot_topic(user_text)
+        if topic and not mem.get("troubleshoot"):
+            mem["troubleshoot"] = {"topic_data": topic, "answers": {}, "current_key": None}
+            first = topic["questions"][0]
+            mem["troubleshoot"]["current_key"] = first["key"]
+            return {
+                "session_id": req.session_id,
+                "messages": [{"role": "assistant", "content": first["ask"], "citations": []}],
+                "cards": [],
+                "memory": mem
+            }
+
 
     return {
         "session_id": req.session_id,

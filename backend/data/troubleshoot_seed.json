@@ -1,0 +1,34 @@
+[
+  {
+    "topic": "whirlpool_fridge_ice_maker_not_working",
+    "title": "Whirlpool refrigerator ice maker not working — checks and likely causes",
+    "triggers": [
+    "ice maker",
+    "icemaker",
+    "not making ice",
+    "no ice",
+    "ice maker not working"
+    ],
+    "questions": [
+      {"key": "has_water", "ask": "Do you have water dispensing normally from the door (if your model has a dispenser)? (yes/no)"},
+      {"key": "ice_maker_on", "ask": "Is the ice maker switch/arm turned ON and not stuck in the OFF position? (yes/no)"},
+      {"key": "temp_ok", "ask": "Is the freezer temperature around 0 degrees Farenheit to 5 F (-18 C to -15 C)? (yes/no/unsure)"}
+    ],
+    "checks": [
+      "Confirm the ice maker is turned ON and the shutoff arm is down (not in the OFF position).",
+      "Verify freezer temperature is cold enough (ice production typically needs ~0°F to 5°F).",
+      "Check that the water supply line is turned on and not kinked.",
+      "Inspect/replace the water filter if it's overdue or flow is weak.",
+      "Look for a frozen fill tube (ice blockage preventing water from entering the ice maker).",
+      "If you hear no water fill and everything else checks out, the inlet valve may be failing."
+    ],
+    "likely_parts": [
+      {"part_number": "PS11752778", "reason": "Example seeded part card reuse (replace with real fridge parts later)"},
+      {"part_number": "PS00000001", "reason": "Water inlet valve (seed placeholder)"},
+      {"part_number": "PS00000002", "reason": "Water filter (seed placeholder)"}
+    ],
+    "citations": [
+      {"title": "PartSelect troubleshooting (seed)", "url": "internal://troubleshoot/whirlpool-ice-maker"}
+    ]
+  }
+]

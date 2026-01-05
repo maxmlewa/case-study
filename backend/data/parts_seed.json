@@ -8,5 +8,27 @@
     "availability": "In Stock",
     "image_url": "https://via.placeholder.com/120",
     "url": "https://www.partselect.com/"
-  }
+  },
+  
+  {
+  "part_number": "PS00000001",
+  "title": "Refrigerator Water Inlet Valve (Seed)",
+  "appliance_type": "refrigerator",
+  "brand": "Whirlpool",
+  "price": 54.99,
+  "availability": "In Stock",
+  "image_url": "https://via.placeholder.com/120",
+  "url": "https://www.partselect.com/"
+},
+
+{
+  "part_number": "PS00000002",
+  "title": "Refrigerator Water Filter (Seed)",
+  "appliance_type": "refrigerator",
+  "brand": "Whirlpool",
+  "price": 39.99,
+  "availability": "In Stock",
+  "image_url": "https://via.placeholder.com/120",
+  "url": "https://www.partselect.com/"
+}
 ]
