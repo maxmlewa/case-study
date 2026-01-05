@@ -5,8 +5,33 @@ import re
 from enum import Enum
 import json
 from pathlib import Path
+from llm_client import rewrite_markdown_with_llm
 
 app = FastAPI(title="Instalily Case Study API")
+
+GUIDES_DB_PATH = Path(__file__).parent / "data" / "guides_seed.json"
+
+def load_guides_db() -> Dict[str, Dict[str, Any]]:
+    items = json.loads(GUIDES_DB_PATH.read_text())
+    return {g["part_number"].upper(): g for g in items}
+
+GUIDES_DB = load_guides_db()
+
+def format_install_guide_md(guide: Dict[str, Any]) -> str:
+    tools = guide.get("tools", [])
+    safety = guide.get("safety", [])
+    steps = guide.get("steps", [])
+
+    tools_md = "\n".join([f"- {t}" for t in tools]) if tools else "- (not specified)"
+    safety_md = "\n".join([f"- {s}" for s in safety]) if safety else "- (not specified)"
+    steps_md = "\n".join([f"{i+1}. {s}" for i, s in enumerate(steps)]) if steps else "1. (not specified)"
+
+    return (
+        f"**{guide.get('title', 'Installation instructions')}**\n\n"
+        f"**Tools you may need**\n{tools_md}\n\n"
+        f"**Safety**\n{safety_md}\n\n"
+        f"**Steps**\n{steps_md}\n"
+    )
 
 
 # intent and router helpers
@@ -154,21 +179,35 @@ def chat(req: ChatRequest):
     # echo only for in-scope requests
     intent = detect_intent(user_text)
 
+    
+
     part_number = extract_part_number(user_text)
     part = PARTS_DB.get(part_number) if part_number else None
     cards = [make_product_card(part)] if part else []
 
+    guide = GUIDES_DB.get(part_number) if part_number else None
+
     if intent == Intent.INSTALL:
-        if part:
-            content = (
-                f"Sure! I can help you install {part['part_number']} ({part['title']}). "
-                "What is your appliance model number? I will tailor the steps and confirm fit."
+        if part and guide:
+            md = format_install_guide_md(guide)
+
+            # Optional LLM rewrite (fallback returns None)
+            rewritten = rewrite_markdown_with_llm(
+                system="You are a helpful PartSelect repair assistant. Keep it concise, safe, and step-by-step.",
+                user=f"User asked: {user_text}\n\nHere are the facts:\n{md}\n\nRewrite cleanly in markdown."
             )
-        else:
+
+            content = rewritten or md
+            citations = guide.get("citations", [])
+        elif part and not guide:
             content = (
-                "Got it — you are asking about installation. "
-                "Share the part number (PSxxxx) and your model number and I will return step-by-step instructions."
-        )
+                f"I found {part['part_number']} ({part['title']}), but I don’t have an installation guide for it yet. "
+                "Share your model number and I can still outline the general replacement steps."
+            )
+            citations = []
+        else:
+            content = "What part number are you installing? (Example: PS11752778)"
+            citations = []
 
     elif intent == Intent.COMPATIBILITY:
         content = (

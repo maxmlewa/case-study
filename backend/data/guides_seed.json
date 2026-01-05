@@ -1,0 +1,21 @@
+[
+  {
+    "part_number": "PS11752778",
+    "title": "How to replace the Dishwasher Circulation Pump",
+    "tools": ["Phillips screwdriver", "T20 Torx driver", "Towel"],
+    "safety": ["Turn off power at the breaker", "Shut off water supply"],
+    "steps": [
+      "Disconnect power at the breaker and shut off the water supply.",
+      "Remove the toe-kick panel and place a towel under the unit.",
+      "Disconnect the drain hose and water line if needed to pull the dishwasher out.",
+      "Access the pump from the bottom panel; take a photo of wiring and hose positions.",
+      "Disconnect wiring harness and loosen hose clamps.",
+      "Remove mounting fasteners and lift out the circulation pump.",
+      "Install the new pump, reattach hoses and wiring, and check seals.",
+      "Reassemble panels, restore water and power, and run a short test cycle to check for leaks."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11752778" }
+    ]
+  }
+]
