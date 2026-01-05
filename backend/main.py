@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from typing import Any, Dict, List, Optional
 import re
 from enum import Enum
+import json
+from pathlib import Path
 
 app = FastAPI(title="Instalily Case Study API")
 
@@ -86,6 +88,35 @@ def is_in_scope(text: str) -> bool:
 
 
 
+PARTS_DB_PATH = Path(__file__).parent / "data" / "parts_seed.json"
+
+def load_parts_db() -> Dict[str, Dict[str, Any]]:
+    items = json.loads(PARTS_DB_PATH.read_text())
+    return {p["part_number"].upper(): p for p in items}
+
+PARTS_DB = load_parts_db()
+
+def extract_part_number(text: str) -> Optional[str]:
+    m = re.search(r"\b(PS\d{5,})\b", text.upper())
+    return m.group(1) if m else None
+
+def make_product_card(part: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "type": "product",
+        "part_number": part["part_number"],
+        "title": part["title"],
+        "price": part["price"],
+        "availability": part["availability"],
+        "image_url": part["image_url"],
+        "url": part["url"],
+        "actions": [
+            {"label": "Installation steps", "action": "INSTALL", "payload": {"part_number": part["part_number"]}},
+            {"label": "Check compatibility", "action": "COMPATIBILITY", "payload": {"part_number": part["part_number"]}}
+        ]
+    }
+
+
+
 
 class ChatRequest(BaseModel):
     session_id: str
@@ -123,12 +154,22 @@ def chat(req: ChatRequest):
     # echo only for in-scope requests
     intent = detect_intent(user_text)
 
+    part_number = extract_part_number(user_text)
+    part = PARTS_DB.get(part_number) if part_number else None
+    cards = [make_product_card(part)] if part else []
+
     if intent == Intent.INSTALL:
-        content = (
-            "Got it — you are asking about installation. "
-            "If you share the part number (e.g., PS11752778) and your model number, "
-            "I will return the step-by-step instructions and tools needed."
+        if part:
+            content = (
+                f"Sure! I can help you install {part['part_number']} ({part['title']}). "
+                "What is your appliance model number? I will tailor the steps and confirm fit."
+            )
+        else:
+            content = (
+                "Got it — you are asking about installation. "
+                "Share the part number (PSxxxx) and your model number and I will return step-by-step instructions."
         )
+
     elif intent == Intent.COMPATIBILITY:
         content = (
             "Got it — you are asking about compatibility. "
@@ -162,6 +203,6 @@ def chat(req: ChatRequest):
     return {
         "session_id": req.session_id,
         "messages": [{"role": "assistant", "content": content, "citations": []}],
-        "cards": [],
+        "cards": cards,
         "memory": req.context or {}
     }

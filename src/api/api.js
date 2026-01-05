@@ -10,7 +10,7 @@ function getSessionId() {
   return sid;
 }
 
-export const getAIMessage = async (userQuery) => {
+export const getAIMessage = async (userQuery, context = {}) => {
   try {
     const res = await fetch("/api/chat", {
       method: "POST",
@@ -18,35 +18,37 @@ export const getAIMessage = async (userQuery) => {
       body: JSON.stringify({
         session_id: getSessionId(),
         message: userQuery,
-        context: {} // TO DO: { appliance_type, model_number, ... }
+        context // TO DO: { appliance_type, model_number, ... }
       })
     });
 
     if (!res.ok) {
       const txt = await res.text();
       return {
-        role: "assistant",
-        content: `Backend error (${res.status}): ${txt}`
+        message: { role: "assistant", content: `Backend error (${res.status}): ${txt}` },
+        cards: []
       };
     }
 
     const data = await res.json();
+   
 
     // FastAPI returns: { messages: [{ role, content, citations }], cards, memory }
     const assistant = data?.messages?.[0];
-    if (!assistant?.content) {
-      return { role: "assistant", content: "I didn't get a valid response from the backend." };
-    }
-
-    // Return in the shape that UI expects
     return {
-      role: "assistant",
-      content: assistant.content
+      message: {
+        role: "assistant",
+        content: assistant?.content || "I didn't get a valid response from the backend."
+      },
+      cards: data?.cards || []
     };
   } catch (err) {
     return {
-      role: "assistant",
-      content: `Could not reach backend. Is it running on port 8000? (${err.message})`
+      message: {
+        role: "assistant",
+        content: `Could not reach backend. Is it running on port 8000? (${err.message})`
+      },
+      cards: []
     };
   }
 };
