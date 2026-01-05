@@ -5,3 +5,11 @@ build/
 dist/
 .env
 .DS_Store
+
+
+# Python sys files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
