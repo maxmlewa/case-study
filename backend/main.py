@@ -5,15 +5,27 @@ import re
 
 app = FastAPI(title="Instalily Case Study API")
 
-# Scope Guard  version 1
+# Scope Guard  version 2 - greeting support
+GREETING_WORDS = {"hi", "hello", "hey", "good morning", "good afternoon", "good evening"}
 FRIDGE_WORDS = {"fridge", "refrigerator", "freezer", "ice maker", "icemaker"}
 DISH_WORDS = {"dishwasher", "dish washer"}
+
+IN_SCOPE_WELCOME = (
+    "Hi! I can help with PartSelect refrigerator and dishwasher parts, "
+    "finding parts, checking compatibility, installation steps, troubleshooting, and order support. "
+    "What’s your appliance model number (e.g., WDT780SAEM1) or part number (e.g., PS11752778)?"
+)
 
 OUT_OF_SCOPE_MSG = (
     "I can help with PartSelect refrigerator and dishwasher parts only, "
     "finding parts, checking compatibility, installation steps, troubleshooting, and order support. "
     "Tell me your appliance model number (e.g., WDT780SAEM1) or part number (e.g., PS11752778)."
 )
+
+def is_greeting(text: str) -> bool:
+    t = text.lower().strip()
+    # handle short greetings and common phrases
+    return t in GREETING_WORDS or any(t.startswith(w) for w in GREETING_WORDS)
 
 def is_in_scope(text: str) -> bool:
     t = text.lower()
@@ -45,6 +57,15 @@ def health():
 @app.post("/api/chat")
 def chat(req: ChatRequest):
     user_text = (req.message or "").strip()
+
+    # Greetings
+    if is_greeting(user_text):
+        return {
+            "session_id": req.session_id,
+            "messages": [{"role": "assistant", "content": IN_SCOPE_WELCOME, "citations": []}],
+            "cards": [],
+            "memory": req.context or {}
+        }
 
     # Scope guard
     if not is_in_scope(user_text):
