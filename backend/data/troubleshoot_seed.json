@@ -3,32 +3,113 @@
     "topic": "whirlpool_fridge_ice_maker_not_working",
     "title": "Whirlpool refrigerator ice maker not working — checks and likely causes",
     "triggers": [
-    "ice maker",
-    "icemaker",
-    "not making ice",
-    "no ice",
-    "ice maker not working"
+      "ice maker not working",
+      "ice maker not making ice",
+      "no ice",
+      "icemaker"
     ],
     "questions": [
-      {"key": "has_water", "ask": "Do you have water dispensing normally from the door (if your model has a dispenser)? (yes/no)"},
-      {"key": "ice_maker_on", "ask": "Is the ice maker switch/arm turned ON and not stuck in the OFF position? (yes/no)"},
-      {"key": "temp_ok", "ask": "Is the freezer temperature around 0 degrees Farenheit to 5 F (-18 C to -15 C)? (yes/no/unsure)"}
+      {
+        "key": "has_water",
+        "ask": "Do you have water dispensing normally from the door (if your model has a dispenser)? (yes/no)"
+      },
+      {
+        "key": "ice_maker_on",
+        "ask": "Is the ice maker switch or shutoff arm turned ON and not stuck in the OFF position? (yes/no)"
+      },
+      {
+        "key": "temp_ok",
+        "ask": "Is the freezer temperature around 0°F to 5°F (-18°C to -15°C)? (yes/no/unsure)"
+      }
     ],
     "checks": [
-      "Confirm the ice maker is turned ON and the shutoff arm is down (not in the OFF position).",
-      "Verify freezer temperature is cold enough (ice production typically needs ~0°F to 5°F).",
+      "Confirm the ice maker is turned ON and the shutoff arm is down.",
+      "Verify the freezer temperature is cold enough for ice production.",
       "Check that the water supply line is turned on and not kinked.",
-      "Inspect/replace the water filter if it's overdue or flow is weak.",
-      "Look for a frozen fill tube (ice blockage preventing water from entering the ice maker).",
-      "If you hear no water fill and everything else checks out, the inlet valve may be failing."
+      "Inspect or replace the water filter if it is overdue.",
+      "Look for a frozen fill tube blocking water entry.",
+      "If no water fills and all else checks out, the water inlet valve may be failing."
     ],
     "likely_parts": [
-      {"part_number": "PS11752778", "reason": "Example seeded part card reuse (replace with real fridge parts later)"},
-      {"part_number": "PS00000001", "reason": "Water inlet valve (seed placeholder)"},
-      {"part_number": "PS00000002", "reason": "Water filter (seed placeholder)"}
+      { "part_number": "PS00000001", "reason": "Water inlet valve may not be opening" },
+      { "part_number": "PS00000002", "reason": "Clogged or overdue water filter" }
     ],
     "citations": [
-      {"title": "PartSelect troubleshooting (seed)", "url": "internal://troubleshoot/whirlpool-ice-maker"}
+      { "title": "PartSelect troubleshooting (seed)", "url": "internal://troubleshoot/whirlpool-ice-maker" }
+    ]
+  },
+
+  {
+    "topic": "dishwasher_grinding_noise",
+    "title": "Dishwasher making a grinding or loud noise — checks and likely causes",
+    "triggers": [
+      "grinding noise",
+      "loud noise",
+      "weird noise",
+      "noise during wash",
+      "rattling"
+    ],
+    "questions": [
+      {
+        "key": "noise_constant",
+        "ask": "Does the noise happen constantly during the wash cycle? (yes/no)"
+      },
+      {
+        "key": "dishes_clear",
+        "ask": "Are all dishes and utensils clear of the spray arms (nothing blocking them)? (yes/no)"
+      },
+      {
+        "key": "draining_issue",
+        "ask": "Does the dishwasher drain normally at the end of the cycle? (yes/no/unsure)"
+      }
+    ],
+    "checks": [
+      "Check that no utensils or dishes are hitting the spray arms.",
+      "Inspect the dishwasher filter for debris or broken glass.",
+      "Listen for noise during draining, which may indicate a failing drain pump.",
+      "Grinding during wash may indicate a worn circulation pump.",
+      "If noise worsens over time, internal pump bearings may be failing."
+    ],
+    "likely_parts": [
+      { "part_number": "PS11752778", "reason": "Circulation pump bearings can cause grinding noise" },
+      { "part_number": "PS12364147", "reason": "Drain pump can grind if obstructed or worn" }
+    ],
+    "citations": [
+      { "title": "PartSelect dishwasher noise guide (seed)", "url": "internal://troubleshoot/dishwasher-noise" }
+    ]
+  },
+
+  {
+    "topic": "refrigerator_humming_or_buzzing",
+    "title": "Refrigerator humming or buzzing noise — checks and likely causes",
+    "triggers": [
+      "humming noise",
+      "buzzing noise",
+      "fridge noise",
+      "refrigerator noise"
+    ],
+    "questions": [
+      {
+        "key": "noise_back",
+        "ask": "Does the noise seem to come from the back or bottom of the refrigerator? (yes/no)"
+      },
+      {
+        "key": "ice_maker_present",
+        "ask": "Does your refrigerator have an ice maker? (yes/no)"
+      }
+    ],
+    "checks": [
+      "Ensure the refrigerator is level and not vibrating against cabinets.",
+      "Clean the condenser fan and coils if dusty.",
+      "Buzzing near the back can indicate a failing condenser fan motor.",
+      "Intermittent buzzing may be caused by the ice maker water inlet valve."
+    ],
+    "likely_parts": [
+      { "part_number": "PS11722167", "reason": "Evaporator or condenser fan motor may be noisy" },
+      { "part_number": "PS00000001", "reason": "Water inlet valve can buzz when failing" }
+    ],
+    "citations": [
+      { "title": "PartSelect refrigerator noise guide (seed)", "url": "internal://troubleshoot/fridge-noise" }
     ]
   }
 ]
