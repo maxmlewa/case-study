@@ -54,6 +54,37 @@ Key features:
 
 ## Backend
 
+I used the FastAPI framework and Python 3.11 for the backend.\
+For the sake of simplicity and explicity, I used in-memory per session to preserve state. \
+
+### Core Components
+
+#### 1. Intent Detection
+The intent detection is rule based and classifies the user input into one of:
+- INSTALL
+- COMPATIBILITY
+- TROUBLESHOOT
+- FIND_PART
+- ORDER_SUPPORT
+- OTHER_IN_SCOPE
+
+#### 2. Scope Guard
+Following the prompt, the agent is strictly limited to:
+- refrigerators
+- dishwashers
+- PartSelect style parts
+
+Out-of-scope requests receive a polite redirect to ensure the agent does not wander.
+
+#### 3. Seeded Knowledge
+All authoritative data is local and inspectable to try and mirror the internal databases:
+
+| Data Type              | File Path                                   |
+|------------------------|----------------------------------------------|
+| Parts                  | `backend/data/parts_seed.json`               |
+| Compatibility          | `backend/data/compatibility.csv`             |
+| Installation guides    | `backend/data/guides_seed.json`              |
+| Troubleshooting flows  | `backend/data/troubleshoot_seed.json`        |
 
 
 
