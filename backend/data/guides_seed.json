@@ -17,5 +17,167 @@
     "citations": [
       { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11752778" }
     ]
+  },
+
+  {
+    "part_number": "PS12364147",
+    "title": "How to replace the Dishwasher Drain Pump",
+    "tools": ["Phillips screwdriver", "T15 or T20 Torx driver", "Towel", "Pliers (for hose clamps)"],
+    "safety": ["Turn off power at the breaker", "Shut off water supply"],
+    "steps": [
+      "Turn off power at the breaker and shut off the water supply.",
+      "Remove the toe-kick panel and place a towel under the front of the dishwasher.",
+      "If needed, pull the dishwasher forward for access (disconnect water line/drain hose only if necessary).",
+      "Access the pump from the bottom; take a photo of wiring and hose routing before removal.",
+      "Disconnect the pump wiring connector.",
+      "Release hose clamp(s) and remove the drain hose from the pump.",
+      "Remove mounting fasteners or rotate/unlock the pump (depending on design) and remove it.",
+      "Install the new drain pump, reconnect hoses and wiring, and reassemble panels.",
+      "Restore water and power, then run a short rinse/drain cycle to confirm proper draining and check for leaks."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS12364147" }
+    ]
+  },
+
+  {
+    "part_number": "PS11748194",
+    "title": "How to replace the Dishwasher Heating Element",
+    "tools": ["Nut driver or socket set", "Adjustable wrench", "Towel"],
+    "safety": ["Turn off power at the breaker", "Shut off water supply", "Allow the element to cool completely"],
+    "steps": [
+      "Turn off power at the breaker and shut off the water supply.",
+      "Open the dishwasher and remove the lower rack for working space.",
+      "Remove the lower access panel/toe-kick and place a towel under the unit.",
+      "From underneath, locate the heating element terminals and note wire placement (take a photo).",
+      "Disconnect the wires from the element terminals.",
+      "Loosen the mounting nuts that hold the element in place.",
+      "From inside the tub, carefully lift and remove the heating element.",
+      "Install the new element with the same orientation, tighten the mounting nuts, and reconnect wires.",
+      "Reassemble panels, restore water and power, and run a short cycle to check for leaks and proper heating."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11748194" }
+    ]
+  },
+
+  {
+    "part_number": "PS11731319",
+    "title": "How to replace the Dishwasher Door Latch Assembly",
+    "tools": ["Phillips screwdriver", "Small flathead screwdriver (optional)"],
+    "safety": ["Turn off power at the breaker"],
+    "steps": [
+      "Turn off power at the breaker.",
+      "Open the dishwasher door and remove the screws around the inner door panel.",
+      "Separate the inner panel carefully and support the control panel/wiring as needed.",
+      "Locate the door latch assembly at the top of the door; take a photo of wiring connections.",
+      "Disconnect the latch wiring connector(s).",
+      "Remove mounting screws/clips and remove the old latch assembly.",
+      "Install the new latch assembly, reconnect wiring, and ensure the latch engages smoothly.",
+      "Reattach the inner door panel and reinstall all screws.",
+      "Restore power and test that the door closes securely and the dishwasher starts normally."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11731319" }
+    ]
+  },
+
+  {
+    "part_number": "PS00000001",
+    "title": "How to replace the Refrigerator Water Inlet Valve",
+    "tools": ["Phillips screwdriver", "Adjustable wrench", "Towel"],
+    "safety": ["Unplug the refrigerator", "Shut off the household water supply"],
+    "steps": [
+      "Unplug the refrigerator and shut off the household water supply.",
+      "Pull the refrigerator away from the wall for access and place a towel under the valve area.",
+      "Remove the rear lower access panel to expose the water inlet valve.",
+      "Take a photo of tubing and wire connections before disconnecting anything.",
+      "Disconnect the wire harness(es) from the valve solenoids.",
+      "Release the water line(s) from the valve (use the correct method for the fitting type).",
+      "Remove mounting screws and remove the old inlet valve.",
+      "Install the new valve, reconnect water line(s) and wiring, and reattach the access panel.",
+      "Turn water back on and check for leaks, then plug the refrigerator back in and verify water/ice operation."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS00000001" }
+    ]
+  },
+
+  {
+    "part_number": "PS00000002",
+    "title": "How to replace the Refrigerator Water Filter",
+    "tools": ["Towel"],
+    "safety": ["Follow the filter housing instructions for your model"],
+    "steps": [
+      "Locate the water filter housing (inside the fridge compartment or at the base grille, depending on model).",
+      "Place a towel under the filter area to catch drips.",
+      "Remove the old filter by turning/pulling it out according to the housing design.",
+      "Insert the new filter and lock it into place.",
+      "Run water through the dispenser for several minutes to purge air and flush the filter (if your model has a dispenser).",
+      "Reset the filter indicator light (if present)."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS00000002" }
+    ]
+  },
+
+  {
+    "part_number": "PS12364173",
+    "title": "How to replace the Refrigerator Ice Maker Assembly",
+    "tools": ["Phillips screwdriver", "1/4\" nut driver"],
+    "safety": ["Unplug the refrigerator", "Turn off the ice maker and water supply if applicable"],
+    "steps": [
+      "Unplug the refrigerator (or turn off power at the breaker).",
+      "Turn off the ice maker (switch OFF / raise shutoff arm).",
+      "Remove the ice bin/bucket for access.",
+      "Remove mounting screws securing the ice maker assembly and gently pull it forward.",
+      "Disconnect the wiring harness connector.",
+      "Install the new ice maker assembly and reconnect the wiring harness.",
+      "Reinstall mounting screws and return the ice bin/bucket.",
+      "Restore power and turn the ice maker back ON. Allow up to 24 hours for ice production to normalize."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS12364173" }
+    ]
+  },
+
+  {
+    "part_number": "PS11722167",
+    "title": "How to replace the Refrigerator Evaporator Fan Motor",
+    "tools": ["Phillips screwdriver", "1/4\" nut driver", "Work gloves"],
+    "safety": ["Unplug the refrigerator"],
+    "steps": [
+      "Unplug the refrigerator.",
+      "Remove items and shelves from the freezer compartment as needed for access.",
+      "Remove the rear freezer panel to access the evaporator area (take care with any wiring).",
+      "Locate the evaporator fan motor and take a photo of wiring connections.",
+      "Disconnect the fan wiring connector and remove mounting screws/clips.",
+      "Remove the old fan motor and install the new motor in the same position.",
+      "Reconnect wiring, reinstall the rear panel, and return shelves/items.",
+      "Plug the refrigerator back in and confirm the fan runs and airflow returns."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11722167" }
+    ]
+  },
+
+  {
+    "part_number": "PS11752759",
+    "title": "How to replace the Refrigerator Thermistor (Temperature Sensor)",
+    "tools": ["Phillips screwdriver", "Work gloves"],
+    "safety": ["Unplug the refrigerator"],
+    "steps": [
+      "Unplug the refrigerator.",
+      "Access the thermistor location (often behind an interior panel in the fridge or freezer compartment).",
+      "Remove any panel/cover screws and carefully open the panel.",
+      "Locate the thermistor and take a photo of how it’s mounted and connected.",
+      "Disconnect the thermistor connector and remove it from its clip/housing.",
+      "Install the new thermistor in the same position and reconnect the connector.",
+      "Reinstall panels/covers and restore power.",
+      "Allow several hours for temperatures to stabilize and verify normal cooling behavior."
+    ],
+    "citations": [
+      { "title": "PartSelect install guide (seed)", "url": "internal://guides/PS11752759" }
+    ]
   }
 ]
