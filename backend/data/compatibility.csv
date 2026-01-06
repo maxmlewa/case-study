@@ -1,2 +1,17 @@
 model_number,part_number,compatible,notes,source
-WDT780SAEM1,PS11752778,true,Seed mapping for case study demo,internal://compat/WDT780SAEM1/PS11752778
+WDT780SAEM1,PS11752778,true,Seed mapping for demo: circulation pump compatible,internal://compat/seed
+WDT780SAEM1,PS12364147,true,Seed mapping for demo: drain pump compatible,internal://compat/seed
+WDT780SAEM1,PS11748194,true,Seed mapping for demo: heating element compatible,internal://compat/seed
+WDT780SAEM1,PS11731319,true,Seed mapping for demo: door latch compatible,internal://compat/seed
+
+WDT780SAEM1,PS12364173,false,Fridge ice maker is not a dishwasher part,internal://compat/seed
+WDT780SAEM1,PS11722167,false,Fridge evaporator fan motor is not a dishwasher part,internal://compat/seed
+
+WRS325FDAM04,PS12364173,true,Seed mapping for demo: ice maker assembly compatible,internal://compat/seed
+WRS325FDAM04,PS00000001,true,Seed mapping for demo: water inlet valve compatible,internal://compat/seed
+WRS325FDAM04,PS00000002,true,Seed mapping for demo: water filter compatible,internal://compat/seed
+WRS325FDAM04,PS11752759,true,Seed mapping for demo: thermistor compatible,internal://compat/seed
+WRS325FDAM04,PS11722167,true,Seed mapping for demo: evaporator fan motor compatible,internal://compat/seed
+
+WRS325FDAM04,PS11752778,false,Dishwasher circulation pump is not a refrigerator part,internal://compat/seed
+WRS325FDAM04,PS12364147,false,Dishwasher drain pump is not a refrigerator part,internal://compat/seed
