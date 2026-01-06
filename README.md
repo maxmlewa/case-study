@@ -224,3 +224,6 @@ http://localhost:3000
 
 
 
+## Author
+Maxwell Onyango
+Instalily AI Take Home Case Study
