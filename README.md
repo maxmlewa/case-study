@@ -87,6 +87,68 @@ All authoritative data is local and inspectable to try and mirror the internal d
 | Troubleshooting flows  | `backend/data/troubleshoot_seed.json`        |
 
 
+#### 4. Troubleshooting Engine
+
+Troubleshooting is implemented as a **guided decision tree** designed to minimize user overload and avoid premature upselling.
+
+**Flow:**
+- **Trigger phrase → topic**
+- Ask **one question at a time**
+- Store user answers in **session memory**
+- **Dynamically tailor** the checklist order based on responses
+- Show **likely replacement parts only after diagnosis**
+
+**Example Topics:**
+- Dishwasher grinding noise
+- Refrigerator ice maker not working
+- Refrigerator buzzing or humming
+
+This approach keeps the experience focused, reduces cognitive load, and ensures that part recommendations are grounded in an actual diagnosis rather than assumptions.
+
+
+
+
+## LLM Integration (Gemini)
+
+### Why I Used an LLM
+
+The LLM does not decide the facts but is onlu used to:
+
+- Rewrite already-generated responses for clarity and friendliness
+- Ask one clarifying question when deterministic logic cannot proceed
+
+All factual decisions, diagnostics, and recommendations remain fully deterministic.
+
+---
+
+### Gemini Setup
+
+The project uses **Gemini Flash**, configured via an environment variable:
+
+```bash
+export GEMINI_API_KEY="your_key_here"
+```
+
+This ensures the LLM remains a lightweight, optional layer focused strictly on language quality and conversational flow.
+
+### Fallback Behavior (No API Key)
+
+If no Gemini API key is set the system continues working normally and deterministic responses are used exclusively.\
+
+This guarantees full operation without any dependency on an external LLM service.
+
+## Safety Rules
+
+The LLM is explicitly instructed to:
+
+- **Not invent parts**
+- **Not invent compatibility**
+- **Not invent prices**
+- **Not invent instructions**
+
+All factual content must originate from the system’s deterministic data sources and logic (seed).
+
+---
 
 
 
