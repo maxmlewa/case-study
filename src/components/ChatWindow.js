@@ -18,8 +18,9 @@ function ProductCard({ card, onAction }) {
       }}
     >
       <img
-        src={card.image_url}
+        src={card.image_url || "/parts/placeholder.png"}
         alt={card.title}
+        onError={(e) => { e.currentTarget.src = "/parts/placeholder.png"; }}
         style={{ width: 72, height: 72, objectFit: "cover", borderRadius: 10 }}
       />
       <div style={{ flex: 1 }}>
