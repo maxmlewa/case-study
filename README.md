@@ -44,6 +44,22 @@ FastAPI Backend
 - every answer can be traced back to a data source (using seeds as of now)
 
 
+## Frontend
+
+The framework used is the Create React App from the provided template.\
+Key features:
+- Chat user interface with message history
+- The production cards (product images and descriptions) are rendered inline
+- There are 2 actions buttons for installation and compatibility checks and a redirect link to the PartSelect website
+
+## Backend
+
+
+
+
+
+
+
 In the project directory, you can run:
 
 ### `npm start`
