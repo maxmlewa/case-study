@@ -225,5 +225,5 @@ http://localhost:3000
 
 
 ## Author
-Maxwell Onyango
+Maxwell Onyango\
 Instalily AI Take Home Case Study
