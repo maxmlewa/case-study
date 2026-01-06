@@ -20,10 +20,9 @@ My focus for this project was correctness, clarity, and extensibility thus the n
 The system uses a deterministic agent core with LLM augmentation for language quality.
 
 
-```bash
+```
 React (CRA) Frontend
         |
-        v
 FastAPI Backend
         |
         +-- Intent Detection (rules)
@@ -40,8 +39,8 @@ FastAPI Backend
 ```
 
 ### Reasons for this design
-- the deterministic nature allows the agent to stick to the facts and makes debugging easier
-- the LLM is made secondary to improve the user experience without compromising the facts
+- the deterministic nature means that the agent will stick to the facts and made debugging easier
+- the LLM is secondary so that the user experience can be improved without compromising the facts
 - every answer can be traced back to a data source (using seeds as of now)
 
 
