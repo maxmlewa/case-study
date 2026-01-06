@@ -2,16 +2,6 @@ import os
 from google import genai
 
 
-# used for the fall back
-def detect_appliance_type(text: str) -> str:
-    t = (text or "").lower()
-    if "dishwasher" in t or "dish washer" in t:
-        return "dishwasher"
-    if "refrigerator" in t or "fridge" in t or "freezer" in t:
-        return "refrigerator"
-    return "appliance"
-
-
 _client = None
 
 def gemini_enabled() -> bool:
@@ -30,9 +20,10 @@ def gemini_rewrite(grounded_text: str) -> str:
     try:
         client = _client_instance()
         resp = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash",
             contents=(
                 "Rewrite the following support response for clarity and friendliness. "
+                "Output only the rewritten response. No preamble like 'Here is a rewritten version'."
                 "Do NOT add new facts, part numbers, prices, or compatibility claims. "
                 "Keep safety steps and all numbered/bulleted steps intact. Output Markdown.\n\n"
                 + grounded_text
@@ -52,10 +43,11 @@ def gemini_fallback(user_text: str) -> str:
     try:
         client = _client_instance()
         resp = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash",
             contents=(
                 "You are a PartSelect support agent LIMITED to refrigerator and dishwasher parts.\n\n"
                 "Task: Ask EXACTLY ONE clarifying question that helps you proceed in determining whether it is an installation, compatibility, troubleshoot, finding part or order support.\n\n"
+                "If you cannot determine next steps, tell them that you can help with questions pertaining dishwashers and refrigerators."
                 "Rules:\n"
                 "- Output ONE sentence ending with a question mark.\n"
                 "- If the user already mentioned 'dishwasher' or 'refrigerator/fridge', DO NOT ask which appliance type it is.\n"

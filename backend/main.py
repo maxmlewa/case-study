@@ -114,7 +114,7 @@ def is_in_scope(text: str, session_mem: Optional[Dict[str, Any]] = None) -> bool
         if any(k in t for k in ["model", "compatible", "install", "part", "fits", "fit"]):
             return True
         # allow model-only replies if already in session
-        if session_mem and session_mem.get("last_part_number"):
+        if session_mem and (session_mem.get("last_part_number") or session_mem.get("last_model_number") or session_mem.get("troubleshoot")):
             return True
 
     return False

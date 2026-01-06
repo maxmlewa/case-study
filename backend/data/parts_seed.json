@@ -6,29 +6,95 @@
     "brand": "Whirlpool",
     "price": 129.99,
     "availability": "In Stock",
-    "image_url": "https://via.placeholder.com/120",
+    "image_url": "/parts/PS11752778.jpg",
     "url": "https://www.partselect.com/"
   },
-  
-  {
-  "part_number": "PS00000001",
-  "title": "Refrigerator Water Inlet Valve (Seed)",
-  "appliance_type": "refrigerator",
-  "brand": "Whirlpool",
-  "price": 54.99,
-  "availability": "In Stock",
-  "image_url": "https://via.placeholder.com/120",
-  "url": "https://www.partselect.com/"
-},
 
-{
-  "part_number": "PS00000002",
-  "title": "Refrigerator Water Filter (Seed)",
-  "appliance_type": "refrigerator",
-  "brand": "Whirlpool",
-  "price": 39.99,
-  "availability": "In Stock",
-  "image_url": "https://via.placeholder.com/120",
-  "url": "https://www.partselect.com/"
-}
+  {
+    "part_number": "PS11748194",
+    "title": "Dishwasher Heating Element",
+    "appliance_type": "dishwasher",
+    "brand": "Whirlpool",
+    "price": 89.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS11748194.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS12364147",
+    "title": "Dishwasher Drain Pump",
+    "appliance_type": "dishwasher",
+    "brand": "Whirlpool",
+    "price": 74.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS12364147.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS11731319",
+    "title": "Dishwasher Door Latch Assembly",
+    "appliance_type": "dishwasher",
+    "brand": "Whirlpool",
+    "price": 45.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS11731319.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS00000001",
+    "title": "Refrigerator Water Inlet Valve",
+    "appliance_type": "refrigerator",
+    "brand": "Whirlpool",
+    "price": 54.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS00000001.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS00000002",
+    "title": "Refrigerator Water Filter",
+    "appliance_type": "refrigerator",
+    "brand": "Whirlpool",
+    "price": 39.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS00000002.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS12364173",
+    "title": "Refrigerator Ice Maker Assembly",
+    "appliance_type": "refrigerator",
+    "brand": "Whirlpool",
+    "price": 162.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS12364173.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS11722167",
+    "title": "Refrigerator Evaporator Fan Motor",
+    "appliance_type": "refrigerator",
+    "brand": "Whirlpool",
+    "price": 79.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS11722167.jpg",
+    "url": "https://www.partselect.com/"
+  },
+
+  {
+    "part_number": "PS11752759",
+    "title": "Refrigerator Temperature Sensor (Thermistor)",
+    "appliance_type": "refrigerator",
+    "brand": "Whirlpool",
+    "price": 29.99,
+    "availability": "In Stock",
+    "image_url": "/parts/PS11752759.jpg",
+    "url": "https://www.partselect.com/"
+  }
 ]
