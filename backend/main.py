@@ -5,8 +5,10 @@ import re
 from enum import Enum
 import json
 from pathlib import Path
-from llm_client import rewrite_markdown_with_llm
+# from llm_client import rewrite_markdown_with_llm
 import csv
+from llm_gemini import gemini_rewrite, gemini_fallback
+
 
 
 app = FastAPI(title="Instalily Case Study API")
@@ -373,6 +375,9 @@ def chat(req: ChatRequest):
                 f"Here's what to try next (in order):\n{checks_md}\n\n"
                 "If you share your exact fridge model number and whether the ice tray is empty vs frozen, I can narrow it down further."
             )
+
+            # rewriting using LLM
+            content = gemini_rewrite(content)
             citations = topic.get("citations", [])
 
             cards = []
@@ -479,13 +484,15 @@ def chat(req: ChatRequest):
             md = format_install_guide_md(guide)
 
             # Optional LLM rewrite (fallback returns None)
-            rewritten = rewrite_markdown_with_llm(
-                system="You are a helpful PartSelect repair assistant. Keep it concise, safe, and step-by-step.",
-                user=f"User asked: {user_text}\n\nHere are the facts:\n{md}\n\nRewrite cleanly in markdown."
-            )
+            # rewritten = rewrite_markdown_with_llm(
+            #     system="You are a helpful PartSelect repair assistant. Keep it concise, safe, and step-by-step.",
+            #     user=f"User asked: {user_text}\n\nHere are the facts:\n{md}\n\nRewrite cleanly in markdown."
+            # )
 
-            content = rewritten or md
+            # content = rewritten or md
+            content = gemini_rewrite(md)
             citations = guide.get("citations", [])
+
         elif part and not guide:
             content = (
                 f"I found {part['part_number']} ({part['title']}), but I don't have an installation guide for it yet. "
@@ -538,6 +545,7 @@ def chat(req: ChatRequest):
                 "Got it — troubleshooting. Tell me: (1) fridge or dishwasher, (2) brand, (3) model number if you have it, "
                 "and what symptom you're seeing (e.g., not making ice, leaking, not draining)."
             )
+            content = gemini_fallback(content)
             citations = []
             cards = []
 
@@ -567,6 +575,10 @@ def chat(req: ChatRequest):
                 "cards": [],
                 "memory": mem
             }
+        else:
+            content = gemini_fallback(user_text)
+            citations = []
+            cards = []
 
 
     return {
