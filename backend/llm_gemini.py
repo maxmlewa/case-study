@@ -23,6 +23,7 @@ def gemini_rewrite(grounded_text: str) -> str:
             model="gemini-2.5-flash",
             contents=(
                 "Rewrite the following support response for clarity and friendliness. "
+                "Keep it professional and maintain the font appropriately"
                 "Output only the rewritten response. No preamble like 'Here is a rewritten version'."
                 "Do NOT add new facts, part numbers, prices, or compatibility claims. "
                 "Keep safety steps and all numbered/bulleted steps intact. Output Markdown.\n\n"
