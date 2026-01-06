@@ -376,10 +376,25 @@ def chat(req: ChatRequest):
             citations = topic.get("citations", [])
 
             cards = []
+            answers = ts.get("answers", {})
+
             for p in topic.get("likely_parts", []):
                 pn = (p.get("part_number") or "").upper()
                 part = PARTS_DB.get(pn)
-                if part:
+                if not part:
+                    continue
+
+                # Simple gating rules (keep deterministic)
+                if pn == "PS00000001":  # Water inlet valve
+                    if answers.get("has_water") == "no":
+                        cards.append(make_product_card(part))
+
+                elif pn == "PS00000002":  # Water filter
+                    if answers.get("has_water") in ("no", "unsure"):
+                        cards.append(make_product_card(part))
+
+                else:
+                    # Default: show if no strong signal
                     cards.append(make_product_card(part))
 
             mem.pop("troubleshoot", None)
@@ -521,7 +536,7 @@ def chat(req: ChatRequest):
         else:
             content = (
                 "Got it — troubleshooting. Tell me: (1) fridge or dishwasher, (2) brand, (3) model number if you have it, "
-                "and what symptom you’re seeing (e.g., not making ice, leaking, not draining)."
+                "and what symptom you're seeing (e.g., not making ice, leaking, not draining)."
             )
             citations = []
             cards = []
