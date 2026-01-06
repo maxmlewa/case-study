@@ -338,8 +338,35 @@ def chat(req: ChatRequest):
                 }
 
             # All answered: show checklist  and suggested parts
-            checks = topic.get("checks", [])
+            #checks = topic.get("checks", [])
+            #checks_md = "\n".join([f"- {c}" for c in checks]) if checks else "- (no checks listed)"
+
+            checks = list(topic.get("checks", []))  # make a copy we can reorder
+            answers = ts.get("answers", {})
+
+            # Helper: move matching checks to the top
+            def promote(match_fn):
+                nonlocal checks
+                top = [c for c in checks if match_fn(c)]
+                rest = [c for c in checks if not match_fn(c)]
+                if top:
+                    checks = top + rest
+
+            # Tailor ordering based on answers (keep it simple + grounded)
+            if answers.get("ice_maker_on") == "no":
+                checks.insert(0, "**Turn the ice maker ON (shutoff arm down / switch ON).**")
+                promote(lambda c: "turned on" in c.lower() or "shutoff arm" in c.lower())
+
+            if answers.get("temp_ok") == "no":
+                checks.insert(0, "**Set freezer temp to 0°F - 5°F (-18°C to -15°C). Wait up to 24 hours for ice production to recover.**")
+                promote(lambda c: "temperature" in c.lower() or "0" in c)
+
+            if answers.get("has_water") == "no":
+                checks.insert(0, "**Check water supply valve is ON and the supply line is not kinked.**")
+                promote(lambda c: "water supply" in c.lower() or "kink" in c.lower() or "filter" in c.lower())
+
             checks_md = "\n".join([f"- {c}" for c in checks]) if checks else "- (no checks listed)"
+
 
             content = (
                 f"**{topic.get('title','Troubleshooting')}**\n\n"
