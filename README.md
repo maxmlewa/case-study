@@ -1,8 +1,49 @@
-# Getting Started with Create React App
+# Instalily AI Case Study - PartSelect Chat Agent
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Overview
+This project implements a focused, production style chat agent for the PartSelect e-commerce experience, limited to refrigerator and dishwasher parts.
+
+The agent helps users:
+- find parts
+- check compatibility with appliance models
+- find installation guides
+- troubleshoot common appliance issues
+- get basic support regarding orders
+
+My focus for this project was correctness, clarity, and extensibility thus the need to maintain a small set of seeded data and follow deterministic workflows.
+
+
+## Architecture Summary
+
+The system uses a deterministic agent core with LLM augmentation for language quality.
+
+
+```bash
+React (CRA) Frontend
+        |
+        v
+FastAPI Backend
+        |
+        +-- Intent Detection (rules)
+        +-- Scope Guard (hard limits)
+        +-- Deterministic Knowledge
+        |     - Parts seed
+        |     - Compatibility table
+        |     - Installation guides
+        |     - Troubleshooting flows
+        |
+        +-- LLM (optional, using Gemini)
+              - Rewrite responses for clarity
+              - Fallback clarifying question only
+```
+
+### Reasons for this design
+- the deterministic nature allows the agent to stick to the facts and makes debugging easier
+- the LLM is made secondary to improve the user experience without compromising the facts
+- every answer can be traced back to a data source (using seeds as of now)
+
 
 In the project directory, you can run:
 
